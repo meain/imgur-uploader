@@ -2,27 +2,52 @@ from imgurpython import ImgurClient
 
 import click
 import os
+try:
+    import ConfigParser
+except ImportError:
+    import configparser as ConfigParser
 
-@click.command()
-@click.argument('gif', type=click.Path(exists=True))
-def upload_gif(gif):
-    """Uploads an image file to Imgur"""
 
+def get_config():
     client_id = os.environ.get('IMGUR_API_ID')
     client_secret = os.environ.get('IMGUR_API_SECRET')
 
-    if client_id is None or client_secret is None:
-        click.echo('Cannot upload - could not find IMGUR_API_ID or IMGUR_API_SECRET environment variables')
+    config = ConfigParser.SafeConfigParser()
+    config.read([os.path.expanduser('~/.config/imgur_uploader/uploader.cfg')])
+
+    try:
+        imgur = dict(config.items("imgur"))
+    except:
+        imgur = {}
+
+    client_id = client_id or imgur.get("id")
+    client_secret = client_secret or imgur.get("secret")
+
+    if not (client_id and client_secret):
+        return {}
+
+    return {"id": client_id, "secret": client_secret}
+
+
+@click.command()
+@click.argument('image', type=click.Path(exists=True))
+def upload_image(image):
+    """Uploads an image file to Imgur"""
+
+    config = get_config()
+
+    if not config:
+        click.echo("Cannot upload - could not find IMGUR_API_ID or "
+                   "IMGUR_API_SECRET environment variables or config file")
         return
 
-    client = ImgurClient(client_id, client_secret)
+    client = ImgurClient(config["id"], config["secret"])
 
-    click.echo('Uploading file {}'.format(click.format_filename(gif)))
+    click.echo('Uploading file {}'.format(click.format_filename(image)))
 
-    response = client.upload_from_path(gif)
+    response = client.upload_from_path(image)
 
-    click.echo('File uploaded - see your gif at {}'.format(response['link']))
+    click.echo('File uploaded - see your image at {}'.format(response['link']))
 
 if __name__ == '__main__':
-    upload_gif()
-
+    upload_image()

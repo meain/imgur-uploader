@@ -10,7 +10,7 @@ def read(*paths):
 
 setup(
     name='imgur-uploader',
-    version='0.1.1',
+    version='0.1.2',
     description='A simple command line client for uploading files to Imgur.',
     long_description=read('README.rst'),
     url='https://github.com/atbaker/imgur-uploader',
@@ -25,7 +25,7 @@ setup(
     ],
     entry_points='''
         [console_scripts]
-        imgur-uploader=imgur_uploader:upload_gif
+        imgur-uploader=imgur_uploader:upload_image
     ''',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
