@@ -49,5 +49,12 @@ def upload_image(image):
 
     click.echo('File uploaded - see your image at {}'.format(response['link']))
 
+    try:
+        import pyperclip
+        pyperclip.copy(response['link'])
+    except ImportError:
+        print("pyperclip not found. To enable clipboard functionality,"
+              " please install it.")
+
 if __name__ == '__main__':
     upload_image()
