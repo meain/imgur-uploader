@@ -27,6 +27,7 @@ setup(
     entry_points='''
         [console_scripts]
         imgur-uploader=imgur_uploader:upload_image
+        imgur=imgur_uploader:upload_image
     ''',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
