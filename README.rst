@@ -39,9 +39,9 @@ Using imgur-uploader
 First, create a file called ``~/.config/imgur_uploader/uploader.cfg``, with the
 following contents (substitute your credentials)::
 
-[imgur]
-id = 9354da9ecdcfae3
-secret = 8387eca75687ecad9876ead47786edac0875dc0d
+    [imgur]
+    id = 9354da9ecdcfae3
+    secret = 8387eca75687ecad9876ead47786edac0875dc0d
 
 Otherwise, set the ``IMGUR_API_ID`` and ``IMGUR_API_SECRET`` environment
 variables in your terminal session, using your client's credentials.
