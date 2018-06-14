@@ -51,7 +51,7 @@ def upload_image(image):
 
     try:
         import pyperclip
-        pyperclip.copy(response['link'])
+        pyperclip.copy(str(response['link']))
     except ImportError:
         print("pyperclip not found. To enable clipboard functionality,"
               " please install it.")
